@@ -1,4 +1,4 @@
-import { ModeToggle } from "@/components/mode-toggle";
+import Header from "@/components/layouts/Header/header";
 import { ThemeProvider } from "@/components/theme-provider";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -25,7 +25,7 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <ModeToggle />
+          <Header />
           {children}
         </ThemeProvider>
       </body>
