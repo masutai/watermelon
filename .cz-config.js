@@ -1,0 +1,25 @@
+module.exports = {
+    types: [
+      { value: 'feat', name: 'feat:     新機能' },
+      { value: 'fix', name: 'fix:      バグ修正' },
+      { value: 'docs', name: 'docs:     ドキュメントのみの変更' },
+      { value: 'style', name: 'style:    コードスタイルの変更（空白、フォーマット、セミコロンの追加など）' },
+      { value: 'refactor', name: 'refactor: リファクタリング（機能追加やバグ修正を含まない変更）' },
+      { value: 'perf', name: 'perf:     パフォーマンス改善' },
+      { value: 'test', name: 'test:     テストの追加・修正' },
+      { value: 'chore', name: 'chore:    ビルドプロセスやツールの変更、ライブラリの更新など' },
+    ],
+    messages: {
+      type: 'コミットする変更タイプを選択してください:',
+      scope: '変更の範囲（例: コンポーネントやファイル名）を記入してください（オプション）:',
+      subject: '変更内容を簡潔に記述してください:\n',
+      body: '変更内容の詳細を記述してください（オプション）。複数行の記述が可能です:\n ',
+      breaking: '破壊的変更についての記述を記入してください（オプション）:\n',
+      footer: '関連するIssue番号を記入してください（オプション）。例: #123, #456:\n',
+      confirmCommit: 'このコミット内容でよろしいですか?',
+    },
+    allowCustomScopes: true,
+    allowBreakingChanges: ['feat', 'fix'],
+    skipQuestions: ['breaking'],
+    subjectLimit: 100,
+  };
