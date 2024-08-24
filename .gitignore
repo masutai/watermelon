@@ -34,3 +34,33 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+*storybook.log
+
+# ESLint
+.eslintcache
+
+# Jest
+/coverage
+
+# Playwright
+/test-results/
+/playwright-report/
+/playwright/.cache/
+
+# Storybook
+/storybook-static
+
+# IDEとエディタ
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# OS関連
+.DS_Store
+Thumbs.db
+
+# その他
+*.log
+.env.test
