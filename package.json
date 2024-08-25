@@ -17,7 +17,8 @@
     "prepare": "husky install",
     "validate:quick": "npm run lint:fix && npm run format && npm run test",
     "validate:full": "npm run validate:quick && npm run test:e2e && npm run build",
-    "commit": "cz"
+    "commit": "cz",
+    "test:coverage": "jest --coverage"
   },
   "dependencies": {
     "@radix-ui/react-dialog": "^1.1.1",
@@ -46,6 +47,7 @@
     "@storybook/blocks": "^8.2.9",
     "@storybook/nextjs": "^8.2.9",
     "@storybook/react": "^8.2.9",
+    "@storybook/react-webpack5": "^8.2.9",
     "@storybook/test": "^8.2.9",
     "@testing-library/jest-dom": "^6.5.0",
     "@testing-library/react": "^16.0.0",
