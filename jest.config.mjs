@@ -1,8 +1,8 @@
-import nextJest from "next/jest.js"
+import nextJest from "next/jest.js";
 
 const createJestConfig = nextJest({
   dir: "./src",
-})
+});
 
 /** @type {import('jest').Config} */
 const config = {
@@ -33,6 +33,6 @@ const config = {
       statements: 80,
     },
   },
-}
+};
 
-export default createJestConfig(config)
+export default createJestConfig(config);
