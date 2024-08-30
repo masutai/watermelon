@@ -5,6 +5,9 @@
 /.pnp
 .pnp.js
 .yarn/install-state.gz
+pnpm-lock.yaml
+yarn.lock
+bun.lockb
 
 # testing
 /coverage
@@ -42,6 +45,9 @@ next-env.d.ts
 
 # Jest
 /coverage
+
+# husky
+/.husky
 
 # Playwright
 /test-results/
