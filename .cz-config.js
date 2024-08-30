@@ -35,4 +35,4 @@ module.exports = {
   upperCaseSubject: false,
   footerPrefix: "ISSUES CLOSED:",
   breaklineChar: "|",
-}
+};
