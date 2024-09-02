@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import { useEffect, useRef, useState } from "react";
 
@@ -45,7 +45,7 @@ export default function Game() {
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <h1 className="text-4xl font-bold mb-4">Game</h1>
-      <p className="mb-4">最後に押されたキー: {pressedKey || 'なし'}</p>
+      <p className="mb-4">最後に押されたキー: {pressedKey || "なし"}</p>
       <div
         ref={containerRef}
         className="relative w-screen h-screen overflow-hidden border border-teal-300 p-4"
@@ -56,7 +56,7 @@ export default function Game() {
           style={{
             left: `${position.x}px`,
             top: `${position.y}px`,
-            transition: 'all 0.3s'
+            transition: "all 0.3s",
           }}
         />
       </div>
