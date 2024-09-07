@@ -10,17 +10,9 @@ export const docsConfig: DocsConfig = {
   mainNav: [
     {
       title: "Home",
-      href: "/",
-    },
-    {
-      title: "Game",
-      href: "/game",
-    },
-    {
-      title: "Books",
-      href: "/books",
-    },
+      href: "/"
+    }
   ],
   sidebarNav: [],
-  chartsNav: [],
+  chartsNav: []
 };
