@@ -6,8 +6,8 @@ export const siteConfig = {
     "Beautifully designed components that you can copy and paste into your apps. Accessible. Customizable. Open Source.",
   links: {
     twitter: "https://twitter.com/shadcn",
-    github: "https://github.com/masutai/library",
-  },
+    github: "https://github.com/masutai/library"
+  }
 };
 
 export type SiteConfig = typeof siteConfig;

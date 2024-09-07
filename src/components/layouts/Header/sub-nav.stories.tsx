@@ -7,8 +7,8 @@ const meta = {
   component: SubNav,
   tags: ["autodocs"],
   parameters: {
-    layout: "centered",
-  },
+    layout: "centered"
+  }
 } satisfies Meta<typeof SubNav>;
 
 export default meta;

@@ -19,11 +19,11 @@ const preview: Preview = {
     controls: {
       matchers: {
         color: /(background|color)$/i,
-        date: /Date$/i,
-      },
+        date: /Date$/i
+      }
     },
-    themes: themes.light,
-  },
+    themes: themes.light
+  }
 };
 
 export default preview;
