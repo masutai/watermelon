@@ -19,4 +19,5 @@ export interface Word {
   british_spelling?: string;
   australian_spelling?: string;
   phenetic_symbol?: string;
+  katakana?: string;
 }
