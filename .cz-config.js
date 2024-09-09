@@ -16,7 +16,7 @@ module.exports = {
     { value: "move", name: "move:     ファイル移動" },
     { value: "disable", name: "disable:  機能を無効化" },
     { value: "improve", name: "improve:  コードの改善" },
-    { value: "chore", name: "chore:    ビルドなどで自動生成されたもの + その他" }
+    { value: "chore", name: "chore:    ビルドなどで自動生成されたもの + その他" },
   ],
   messages: {
     type: "コミットする変更タイプを選択してください:",
@@ -26,7 +26,7 @@ module.exports = {
     body: "変更内容の詳細を記述してください（理由や背景など）:\n ",
     breaking: "破壊的変更がある場合、その内容を記述してください:\n",
     footer: "関連するIssue番号を記入してください（例: #123, #456）:\n",
-    confirmCommit: "このコミット内容でよろしいですか?"
+    confirmCommit: "このコミット内容でよろしいですか?",
   },
   allowCustomScopes: true,
   allowBreakingChanges: ["feat", "fix", "refactor"],
@@ -34,5 +34,5 @@ module.exports = {
   subjectLimit: 100,
   upperCaseSubject: false,
   footerPrefix: "ISSUES CLOSED:",
-  breaklineChar: "|"
+  breaklineChar: "|",
 };
