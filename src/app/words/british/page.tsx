@@ -1,4 +1,4 @@
-import QuizForm from "@/components/layouts/QuizForm/quizform";
+import QuizForm from "@/components/layouts/QuizForm/AmericanToBritish/index";
 
 import { AmericanToBritish } from "@/types/amerian2british";
 
