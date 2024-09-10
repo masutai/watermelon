@@ -3,12 +3,12 @@ import "../../../app/globals.css";
 import SubNav from "./sub-nav";
 
 const meta = {
-	title: "components/layouts/Header/SubNav",
-	component: SubNav,
-	tags: ["autodocs"],
-	parameters: {
-		layout: "centered"
-	}
+  title: "components/layouts/Header/SubNav",
+  component: SubNav,
+  tags: ["autodocs"],
+  parameters: {
+    layout: "centered"
+  }
 } satisfies Meta<typeof SubNav>;
 
 export default meta;
