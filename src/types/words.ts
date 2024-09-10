@@ -18,5 +18,6 @@ export interface Word {
   american_spelling?: string;
   british_spelling?: string;
   australian_spelling?: string;
-  phonetic_symbol?: string;
+  phenetic_symbol?: string;
+  katakana?: string;
 }
