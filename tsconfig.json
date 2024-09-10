@@ -23,6 +23,12 @@
     "target": "ES2017",
     "types": ["jest", "node", "@testing-library/jest-dom"]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/components/layouts/QuizForm"
+  ],
   "exclude": ["node_modules"]
 }
