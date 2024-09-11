@@ -1,5 +1,6 @@
 import americanToBritish from "@/data/american_to_biritish.json";
 import englishList from "@/data/english_list.json";
+import errorMessage from "@/data/error_message.json";
 import { Hono } from "hono";
 import { handle } from "hono/vercel";
 
@@ -19,6 +20,10 @@ app.get("/words/british", (c) => {
 
 app.get("/words/list", (c) => {
   return c.json(englishList);
+});
+
+app.get("/error-message", (c) => {
+  return c.json(errorMessage);
 });
 
 export const GET = handle(app);
