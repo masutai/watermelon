@@ -1,0 +1,7 @@
+[
+  {
+    "message": "x is not defind",
+    "exampleCode": "x.substring(1)",
+    "options": ["x is not defind", "x is not defined", "x is not declared", "x is not initialized"]
+  }
+]
