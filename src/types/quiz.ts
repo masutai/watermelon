@@ -15,6 +15,7 @@ export interface BritishQuizItem extends BaseQuizItem {
 export interface EngineerQuizItem extends BaseQuizItem {
   exampleCode: string;
   options: string[];
+  answers: string[];
 }
 
 export type QuizItem = BritishQuizItem | EngineerQuizItem;

@@ -11,13 +11,16 @@ interface EngineerQuizFormProps {
 }
 
 export default function EngineerQuizForm({ question, onSubmit }: EngineerQuizFormProps) {
-  const [selectedAnswer, setSelectedAnswer] = useState<string | null>(null);
+  const [selectedAnswer, setSelectedAnswer] = useState<string[]>([]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (selectedAnswer !== null) {
-      onSubmit(selectedAnswer === question.answer);
+    if (selectedAnswer.length > 0) {
+      const set1 = new Set(selectedAnswer);
+      const set2 = new Set(question.answers);
+      onSubmit(set1.size === set2.size && selectedAnswer.every((answer) => set2.has(answer)));
     }
+    setSelectedAnswer([]);
   };
 
   return (

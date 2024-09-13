@@ -25,7 +25,8 @@ async function QuizContent() {
           question: message.message,
           answer: message.message,
           exampleCode: message.exampleCode,
-          options: message.options
+          options: message.options,
+          answers: message.answers
         }) as EngineerQuizItem
     ),
     type: "engineer"
