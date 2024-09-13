@@ -1,5 +1,5 @@
 import { EngineerQuizItem } from "@/types/quiz";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import QuestionDisplay from "./common/QuestionDisplay";
 import SubmitButton from "./common/SubmitButton";
 import CodeExample from "./engineer/CodeExample";
@@ -8,10 +8,19 @@ import MultipleChoiceOptions from "./engineer/MultipleChoiceOptions";
 interface EngineerQuizFormProps {
   question: EngineerQuizItem;
   onSubmit: (isCorrect: boolean) => void;
+  questionCount: number;
 }
 
-export default function EngineerQuizForm({ question, onSubmit }: EngineerQuizFormProps) {
+export default function EngineerQuizForm({
+  question,
+  onSubmit,
+  questionCount
+}: EngineerQuizFormProps) {
   const [selectedAnswer, setSelectedAnswer] = useState<string[]>([]);
+
+  const randomSortedOptions = useMemo(() => {
+    return [...question.options].sort(() => Math.random() - 0.5);
+  }, [question.options, questionCount]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,11 +37,11 @@ export default function EngineerQuizForm({ question, onSubmit }: EngineerQuizFor
       <QuestionDisplay question={question.question} />
       <CodeExample code={question.exampleCode} />
       <MultipleChoiceOptions
-        options={question.options}
+        options={randomSortedOptions}
         selectedAnswer={selectedAnswer}
         onSelect={setSelectedAnswer}
       />
-      <SubmitButton disabled={!selectedAnswer} />
+      <SubmitButton disabled={selectedAnswer.length === 0} />
     </form>
   );
 }
