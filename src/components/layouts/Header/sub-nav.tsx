@@ -1,5 +1,3 @@
-"use client";
-
 import { Icons } from "@/components/icons";
 import { ModeToggle } from "@/components/mode-toggle";
 import { siteConfig } from "@/config/site";

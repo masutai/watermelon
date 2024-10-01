@@ -1,11 +1,6 @@
-"use client";
-
-import { cn } from "@/lib/utils";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 export function MainNav() {
-  const pathname = usePathname();
 
   return (
     <div className="mr-4 hidden md:flex">
