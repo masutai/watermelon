@@ -3,11 +3,13 @@ import { Position } from "@/types/position";
 import { useEffect, useRef, useState } from "react";
 
 export default function Game() {
-  const [position, setPosition] = useState(new Position(0, 0, 0));
+  const [caracterPosition, setCaracterPosition] = useState(new Position(80, 100, 0));
   const [pressedKey, setPressedKey] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const ballRef = useRef<HTMLDivElement>(null);
-
+  const containerWidth = containerRef.current?.clientWidth;
+  const watermelonPosition = new Position(containerWidth as number/2, 0, 0);
+  console.log(watermelonPosition);
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       setPressedKey(e.key);
@@ -20,7 +22,7 @@ export default function Game() {
         const movePx = 20;
         const rotationStep = 45; // 回転ステップ
 
-        let newPosition = position;
+        let newPosition = caracterPosition;
 
         // 回転角度をラジアンに変換
         const rad = (newPosition.rotation * Math.PI) / 180;
@@ -70,7 +72,7 @@ export default function Game() {
         const adjustedY = Math.max(0, Math.min(containerHeight - ballHeight, newPosition.y));
         newPosition = new Position(adjustedX, adjustedY, newPosition.rotation);
 
-        setPosition(newPosition);
+        setCaracterPosition(newPosition);
 
         // ボールのスタイルを更新
         if (ballRef.current) {
@@ -83,7 +85,7 @@ export default function Game() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [position]);
+  }, [caracterPosition]);
 
   return (
     <div className="h-screen flex flex-col">
@@ -92,15 +94,22 @@ export default function Game() {
       <div ref={containerRef} className="relative overflow-hidden border border-teal-300 h-full">
         {/* スクロール可能なコンテンツをここに追加 */}
         <div className="max-h-screen h-screen bg-amber-500 text-black">
-          <br />
+          <div className="absolute w-10 h-10 bg-green-800 rounded-full "
+            style={{
+              left: `${watermelonPosition.x}px`,
+              top: `${watermelonPosition.y}px`,
+              transform: `rotate(${watermelonPosition.rotation}deg)`
+            }}
+          >
+          </div>
         </div>
         <div
           className="absolute w-10 h-10 bg-blue-500 rounded-sm transition-all duration-75"
           ref={ballRef}
           style={{
-            left: `${position.x}px`,
-            top: `${position.y}px`,
-            transform: `rotate(${position.rotation}deg)`
+            left: `${caracterPosition.x}px`,
+            top: `${caracterPosition.y}px`,
+            transform: `rotate(${caracterPosition.rotation}deg)`
           }}
         />
       </div>
