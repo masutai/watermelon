@@ -1,12 +1,27 @@
 "use client";
+import { calculateHitPosition } from "@/lib/calculateHitPosition";
+import { checkCollision } from "@/lib/checkCollision";
 import { Position } from "@/types/position";
 import { useEffect, useRef, useState } from "react";
 
 export default function Game() {
-  const [position, setPosition] = useState(new Position(0, 0, 0));
+  const [characterPosition, setCharacterPosition] = useState<Position>({
+    x: 80,
+    y: 100,
+    rotation: 0
+  });
   const [pressedKey, setPressedKey] = useState<string | null>(null);
   const containerRef = useRef<HTMLDivElement>(null);
   const ballRef = useRef<HTMLDivElement>(null);
+  const [isCollision, setIsCollision] = useState(false);
+  const [hitPosition, setHitPosition] = useState<Position>({
+    x: 0,
+    y: 0,
+    rotation: 0
+  });
+
+  const containerWidth = containerRef.current?.clientWidth || 0;
+  const watermelonPosition: Position = { x: containerWidth / 2, y: 0, rotation: 0 };
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -19,8 +34,7 @@ export default function Game() {
         const ballHeight = ballRef.current.clientHeight;
         const movePx = 20;
         const rotationStep = 45; // 回転ステップ
-
-        let newPosition = position;
+        let newPosition: Position = { ...characterPosition };
 
         // 回転角度をラジアンに変換
         const rad = (newPosition.rotation * Math.PI) / 180;
@@ -53,24 +67,29 @@ export default function Game() {
             deltaX = movePx * Math.cos(rad);
             deltaY = movePx * Math.sin(rad);
             break;
+          case " ":
+            setIsCollision(checkCollision(hitPosition, watermelonPosition));
+            break;
           default:
             break;
         }
 
         // 新しい位置を計算
         if (deltaRotation !== 0) {
-          newPosition = newPosition.rotate(deltaRotation);
+          newPosition.rotation = (newPosition.rotation + deltaRotation) % 360;
         }
         if (deltaX !== 0 || deltaY !== 0) {
-          newPosition = newPosition.move(deltaX, deltaY);
+          newPosition.x += deltaX;
+          newPosition.y += deltaY;
         }
 
         // 境界チェック
-        const adjustedX = Math.max(0, Math.min(containerWidth - ballWidth, newPosition.x));
-        const adjustedY = Math.max(0, Math.min(containerHeight - ballHeight, newPosition.y));
-        newPosition = new Position(adjustedX, adjustedY, newPosition.rotation);
+        newPosition.x = Math.max(0, Math.min(containerWidth - ballWidth, newPosition.x));
+        newPosition.y = Math.max(0, Math.min(containerHeight - ballHeight, newPosition.y));
+        // console.log(newPosition)
+        setCharacterPosition(newPosition);
 
-        setPosition(newPosition);
+        setHitPosition(calculateHitPosition(newPosition));
 
         // ボールのスタイルを更新
         if (ballRef.current) {
@@ -83,24 +102,48 @@ export default function Game() {
 
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
-  }, [position]);
+  }, [characterPosition, watermelonPosition]);
 
   return (
     <div className="h-screen flex flex-col">
       <h1 className="text-4xl font-bold mb-4">Game</h1>
       <p className="mb-4">最後に押されたキー: {pressedKey || "なし"}</p>
+      {isCollision && <p className="mb-4">collision</p>}
       <div ref={containerRef} className="relative overflow-hidden border border-teal-300 h-full">
         {/* スクロール可能なコンテンツをここに追加 */}
         <div className="max-h-screen h-screen bg-amber-500 text-black">
-          <br />
+          <div
+            className="absolute w-10 h-10 bg-green-800 rounded-full"
+            style={{
+              left: `${watermelonPosition.x}px`,
+              top: `${watermelonPosition.y}px`,
+              transform: `rotate(${watermelonPosition.rotation}deg)`
+            }}
+          ></div>
         </div>
         <div
           className="absolute w-10 h-10 bg-blue-500 rounded-sm transition-all duration-75"
           ref={ballRef}
           style={{
-            left: `${position.x}px`,
-            top: `${position.y}px`,
-            transform: `rotate(${position.rotation}deg)`
+            left: `${characterPosition.x}px`,
+            top: `${characterPosition.y}px`,
+            transform: `rotate(${characterPosition.rotation}deg)`
+          }}
+        >
+          <div className="relative top-[-20px] left-5 w-2 h-2 bg-red-500 rounded-full"></div>
+        </div>
+        <div
+          className="absolute w-1 h-1 bg-teal-100 rounded-full transition-all duration-75"
+          style={{
+            top: `${hitPosition.y}px`,
+            left: `${hitPosition.x}px`
+          }}
+        />
+        <div
+          className="absolute w-1 h-1 bg-teal-500 rounded-full transition-all duration-75"
+          style={{
+            left: `${watermelonPosition.x + 20}px`,
+            top: `${watermelonPosition.y + 20}px`
           }}
         />
       </div>
