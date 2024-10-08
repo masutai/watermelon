@@ -1,6 +1,3 @@
 export default function MainNav() {
-    return (
-        <nav>
-        </nav>
-    )
+  return <nav></nav>;
 }
