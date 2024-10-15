@@ -49,7 +49,7 @@ export function useGameLogic() {
             break;
           case " ":
             let newGameModel = Object.assign(new GameModel(), gameModel);
-            newGameModel.checkCollision(newPosition, gameModel.watermelonPosition);
+            newGameModel.checkCollision(newGameModel.hitPosition, newGameModel.watermelonPosition);
             setGameModel(newGameModel);
             break;
           default:
@@ -69,7 +69,7 @@ export function useGameLogic() {
 
         const updatedGameModel = Object.assign(new GameModel());
         Object.assign(updatedGameModel, gameModel);
-        updatedGameModel.updatePosition(newPosition);
+        updatedGameModel.updateCharacterPosition(newPosition);
 
         const body = {
           characterPosition: updatedGameModel.characterPosition,

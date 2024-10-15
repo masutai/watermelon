@@ -3,7 +3,7 @@ import { Position } from "@/types/position";
 
 export class GameModel {
   characterPosition: Position;
-  readonly watermelonPosition: Position;
+  watermelonPosition: Position;
   hitPosition: Position;
   isCollision: boolean;
 
@@ -14,13 +14,17 @@ export class GameModel {
     this.isCollision = false;
   }
 
-  updatePosition(newPosition: Position): void {
+  updateCharacterPosition(newPosition: Position): void {
     this.characterPosition = newPosition;
     this.hitPosition = calculateHitPosition(this.characterPosition);
   }
 
-  checkCollision(player: Position, watermelon: Position) {
-    const distance = Math.sqrt((player.x - watermelon.x) ** 2 + (player.y - watermelon.y) ** 2);
+  updateWatermelonPosition(newPosition: Position): void {
+    this.watermelonPosition = newPosition;
+  }
+
+  checkCollision(hitPosition: Position, watermelon: Position) {
+    const distance = Math.sqrt((hitPosition.x - watermelon.x) ** 2 + (hitPosition.y - watermelon.y) ** 2);
     this.isCollision = distance < 20;
   }
 }
