@@ -2,7 +2,7 @@ import { GameModel } from "@/lib/game/gameModel";
 import { Position } from "@/types/position";
 import { useCallback, useRef, useState } from "react";
 
-export function useGameLogic() {
+export function useGameLogic(pairingCode: string) {
   const [pressedKey, setPressedKey] = useState<string>("");
   const [gameModel, setGameModel] = useState<GameModel>(new GameModel());
   const containerRef = useRef<HTMLDivElement>(null);
@@ -16,7 +16,7 @@ export function useGameLogic() {
         const containerHeight = containerRef.current.clientHeight;
         const movePx = 20;
         const rotationStep = 45;
-        let newPosition: Position = { ...gameModel.characterPosition };
+        const newPosition: Position = { ...gameModel.characterPosition };
 
         const rad = (newPosition.rotation * Math.PI) / 180;
 
@@ -75,18 +75,18 @@ export function useGameLogic() {
           characterPosition: updatedGameModel.characterPosition,
           watermelonPosition: updatedGameModel.watermelonPosition,
           hitPosition: updatedGameModel.hitPosition,
-          isCollision: updatedGameModel.isCollision
+          isCollision: updatedGameModel.isCollision,
+          pairingCode: pairingCode
         };
-        let data = await fetch("/api/game", {
+        const data = await fetch("/api/game", {
           method: "POST",
           headers: {
             "Content-Type": "application/json"
           },
           body: JSON.stringify(body)
         });
-        let json = await data.json();
+        const json = await data.json();
         if (json && typeof json === "object" && "gameModel" in json) {
-          console.log("handle_test_click_response", json);
           setGameModel(json.gameModel);
         } else {
           console.error("Invalid response from API:", json);
@@ -99,7 +99,7 @@ export function useGameLogic() {
         }
       }
     },
-    [gameModel, containerRef, ballRef]
+    [gameModel, containerRef, ballRef, pairingCode]
   );
 
   return { pressedKey, gameModel, setGameModel, containerRef, ballRef, handleKeyDown };

@@ -1,21 +1,13 @@
 "use client";
 
+import { usePusherConnection } from "@/hooks/usePusherConnection";
 import { GameModel } from "@/lib/game/gameModel";
-import { pusherClient } from "@/lib/pusher/client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import GameView from "./GameView";
 
-export default function GameSpectate() {
+export default function GameSpectate({ pairingCode }: { pairingCode: string }) {
   const [gameModel, setGameModel] = useState<GameModel>(new GameModel());
-  useEffect(() => {
-    const channel = pusherClient.subscribe("private-game").bind("evt::game", (data: GameModel) => {
-      console.log("received_from_pusher", data);
-      setGameModel(data);
-    });
-    return () => {
-      channel.unbind();
-    };
-  });
+  usePusherConnection(gameModel, setGameModel, () => {}, pairingCode);
   return (
     <div>
       <GameView
