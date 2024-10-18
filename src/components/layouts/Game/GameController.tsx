@@ -6,7 +6,7 @@ import GameView from "./GameView";
 
 export default function GameController({ pairingCode }: { pairingCode: string }) {
   const { pressedKey, gameModel, setGameModel, containerRef, ballRef, handleKeyDown } =
-    useGameLogic();
+    useGameLogic(pairingCode);
 
   usePusherConnection(gameModel, setGameModel, handleKeyDown, pairingCode);
 
