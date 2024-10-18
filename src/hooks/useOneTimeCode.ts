@@ -6,12 +6,16 @@ import { useEffect, useState } from "react";
  * @returns
  */
 export const useOneTimeCode = () => {
-  const [code, setCode] = useState<number>(generateOneTimeCode());
+  const [code, setCode] = useState<number | null>(null);
 
   useEffect(() => {
-    const intervalOTC = setInterval(() => {
+    const generateCode = () => {
       setCode(generateOneTimeCode());
-    }, 10000);
+    };
+
+    generateCode(); // 初回コード生成
+
+    const intervalOTC = setInterval(generateCode, 10000); // 10秒ごとに新しいコードを生成
 
     return () => clearInterval(intervalOTC);
   }, []);

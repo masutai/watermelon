@@ -2,10 +2,8 @@
 
 import CardTemplate from "@/components/layouts/Card/CardTemplate";
 import OTCButton from "@/components/layouts/Card/OTC";
-import { useOneTimeCode } from "@/hooks/useOneTimeCode";
 
 export default function Home() {
-  const code = useOneTimeCode();
   return (
     <main className="">
       <CardTemplate

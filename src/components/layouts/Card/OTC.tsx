@@ -3,11 +3,9 @@
 import { Button } from "@/components/ui/button";
 import { useOneTimeCode } from "@/hooks/useOneTimeCode";
 import Link from "next/link";
-import { useState } from "react";
 
 // TODO: cookie
 export default function OTCButton() {
-  const [pairingCode, setPairingCode] = useState<number | undefined>(undefined);
   const code = useOneTimeCode();
 
   if (code === undefined) {
@@ -17,7 +15,7 @@ export default function OTCButton() {
   return (
     <div>
       <p>OTC: {code}</p>
-      <Button onClick={() => setPairingCode(code)}>
+      <Button>
         <Link href={`/play/${code}`}>ペアリング</Link>
       </Button>
     </div>
