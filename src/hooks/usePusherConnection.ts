@@ -6,6 +6,7 @@ export function usePusherConnection(
   gameModel: GameModel,
   setGameModel: React.Dispatch<React.SetStateAction<GameModel>>,
   handleKeyDown: (e: KeyboardEvent) => void,
+  handlePadDown: (e: GamepadEvent) => void,
   pairingCode: string
 ) {
   useEffect(() => {
@@ -17,8 +18,13 @@ export function usePusherConnection(
 
     window.addEventListener("keydown", handleKeyDown);
 
+    window.addEventListener("gamepadconnected", () => {
+      handlePadDown;
+      // window.removeEventListener("keydown", handleKeyDown);
+    });
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("gamepadconnected", handlePadDown);
       channel.unbind();
       pusherClient.unsubscribe(`private-game-${pairingCode}`);
     };
