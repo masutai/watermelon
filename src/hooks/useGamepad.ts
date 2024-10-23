@@ -6,17 +6,16 @@ export default function useGamepad() {
   useEffect(() => {
     const interval = setInterval(() => {
       let gamepad: Gamepad | null = null;
-      if (navigator.getGamepads()[0]) {
-        gamepad = navigator.getGamepads()[0];
-      } else if (navigator.getGamepads()[1]) {
-        gamepad = navigator.getGamepads()[1];
-      }
+      // if (navigator.getGamepads()[0]) {
+      //   gamepad = navigator.getGamepads()[0];
+      // } else if (navigator.getGamepads()[1]) {
 
+      // }
+      gamepad = navigator.getGamepads()[1];
       if (gamepad) {
         setX(gamepad.axes[0]);
         setY(gamepad.axes[1]);
       }
-      console.log(gamepad);
     }, 100);
 
     return () => clearInterval(interval);
