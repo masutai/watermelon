@@ -8,6 +8,9 @@ export function usePad(initialGameModel: GameModel) {
   useEffect(() => {
     const handleGamepadInput = () => {
       let gamepad: Gamepad | null = navigator.getGamepads()[1];
+      if (gamepad == null) {
+        gamepad = navigator.getGamepads()[0];
+      }
 
       if (gamepad) {
         const deltaX = gamepad.axes[0] * 20;
