@@ -7,11 +7,9 @@ export function usePad(initialGameModel: GameModel) {
 
   useEffect(() => {
     const handleGamepadInput = () => {
-      console.log(navigator.getGamepads());
-      let gamepad: Gamepad | null = navigator.getGamepads()[1];
-      if (gamepad == null) {
-        gamepad = navigator.getGamepads()[0];
-      }
+      const gamepads = navigator.getGamepads();
+      const gamepad = Array.from(gamepads).find(gp => gp !== null);
+      console.log(gamepad)
 
       if (gamepad) {
         const deltaX = gamepad.axes[0] * 20;
