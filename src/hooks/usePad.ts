@@ -7,6 +7,7 @@ export function usePad(initialGameModel: GameModel) {
 
   useEffect(() => {
     const handleGamepadInput = () => {
+      console.log(navigator.getGamepads());
       let gamepad: Gamepad | null = navigator.getGamepads()[1];
       if (gamepad == null) {
         gamepad = navigator.getGamepads()[0];
