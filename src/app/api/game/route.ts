@@ -4,7 +4,7 @@ import { getPusherInstance } from "@/lib/pusher/server";
 const pusherServer = getPusherInstance();
 export const dynamic = "force-dynamic";
 
-export async function POST(req: Request, res: Response) {
+export async function POST(req: Request) {
   const { characterPosition, watermelonPosition, hitPosition, isCollision, pairingCode } =
     await req.json();
   try {
