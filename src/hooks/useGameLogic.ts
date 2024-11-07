@@ -1,6 +1,6 @@
+import { useCallback, useRef, useState } from "react";
 import { GameModel } from "@/lib/game/gameModel";
 import { Position } from "@/types/position";
-import { useCallback, useRef, useState } from "react";
 
 export function useGameLogic(pairingCode: string) {
   const [pressedKey, setPressedKey] = useState<string>("");
@@ -48,7 +48,7 @@ export function useGameLogic(pairingCode: string) {
             deltaY = movePx * Math.sin(rad);
             break;
           case " ":
-            let newGameModel = Object.assign(new GameModel(), gameModel);
+            const newGameModel = Object.assign(new GameModel(), gameModel);
             newGameModel.checkCollision(newGameModel.hitPosition, newGameModel.watermelonPosition);
             setGameModel(newGameModel);
             break;
@@ -113,7 +113,7 @@ export function useGameLogic(pairingCode: string) {
 
     let deltaX = 0;
     let deltaY = 0;
-    let deltaRotation = 0;
+    const deltaRotation = 0;
 
     if (gamepad?.buttons[0]?.pressed) {
       const newGameModel = Object.assign(new GameModel(), gameModel);

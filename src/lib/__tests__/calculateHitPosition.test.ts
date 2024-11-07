@@ -1,5 +1,5 @@
-import { Position } from "@/types/position";
 import { calculateHitPosition } from "../calculateHitPosition";
+import { Position } from "@/types/position";
 
 describe("calculateHitPosition", () => {
   let characterPosition: Position;

@@ -1,6 +1,6 @@
 "use client";
-import { GameModel } from "@/lib/game/gameModel";
 import { useEffect, useState } from "react";
+import { GameModel } from "@/lib/game/gameModel";
 
 export function usePad(initialGameModel: GameModel) {
   const [gameModel, setGameModel] = useState(initialGameModel);

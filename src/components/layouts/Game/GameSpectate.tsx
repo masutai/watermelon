@@ -1,9 +1,9 @@
 "use client";
 
-import { usePusherConnection } from "@/hooks/usePusherConnection";
-import { GameModel } from "@/lib/game/gameModel";
 import { useState } from "react";
 import GameView from "./GameView";
+import { usePusherConnection } from "@/hooks/usePusherConnection";
+import { GameModel } from "@/lib/game/gameModel";
 
 export default function GameSpectate({ pairingCode }: { pairingCode: string }) {
   const [gameModel, setGameModel] = useState<GameModel>(new GameModel());

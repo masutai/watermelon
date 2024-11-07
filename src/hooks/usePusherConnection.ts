@@ -1,7 +1,7 @@
-import { GameModel } from "@/lib/game/gameModel";
-import { pusherClient } from "@/lib/pusher/client";
 import { useEffect } from "react";
 import useGamepad from "./useGamepad";
+import { GameModel } from "@/lib/game/gameModel";
+import { pusherClient } from "@/lib/pusher/client";
 
 export function usePusherConnection(
   initialGameModel: GameModel,

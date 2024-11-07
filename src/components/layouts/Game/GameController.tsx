@@ -1,8 +1,8 @@
 "use client";
 
-import { usePusherConnection } from "@/hooks/usePusherConnection";
 import { useGameLogic } from "../../../hooks/useGameLogic";
 import GameView from "./GameView";
+import { usePusherConnection } from "@/hooks/usePusherConnection";
 
 export default function GameController({ pairingCode }: { pairingCode: string }) {
   const {
