@@ -7,6 +7,7 @@ export function useGameLogic(pairingCode: string) {
   const [gameModel, setGameModel] = useState<GameModel>(new GameModel());
   const containerRef = useRef<HTMLDivElement>(null);
   const ballRef = useRef<HTMLDivElement>(null);
+  const [attackCount, setAttackCount] = useState(0);
 
   const handleKeyDown = useCallback(
     async (e: KeyboardEvent) => {
@@ -48,9 +49,15 @@ export function useGameLogic(pairingCode: string) {
             deltaY = movePx * Math.sin(rad);
             break;
           case " ":
-            const newGameModel = Object.assign(new GameModel(), gameModel);
-            newGameModel.checkCollision(newGameModel.hitPosition, newGameModel.watermelonPosition);
-            setGameModel(newGameModel);
+            setAttackCount((pre) => pre++);
+            if (attackCount < 3) {
+              const newGameModel = Object.assign(new GameModel(), gameModel);
+              newGameModel.checkCollision(
+                newGameModel.hitPosition,
+                newGameModel.watermelonPosition
+              );
+              setGameModel(newGameModel);
+            }
             break;
           default:
             break;
@@ -76,7 +83,8 @@ export function useGameLogic(pairingCode: string) {
           watermelonPosition: updatedGameModel.watermelonPosition,
           hitPosition: updatedGameModel.hitPosition,
           isCollision: updatedGameModel.isCollision,
-          pairingCode: pairingCode
+          pairingCode: pairingCode,
+          attackCount: attackCount
         };
         const data = await fetch("/api/game", {
           method: "POST",
@@ -116,9 +124,12 @@ export function useGameLogic(pairingCode: string) {
     const deltaRotation = 0;
 
     if (gamepad?.buttons[0]?.pressed) {
-      const newGameModel = Object.assign(new GameModel(), gameModel);
-      newGameModel.checkCollision(newGameModel.hitPosition, newGameModel.watermelonPosition);
-      setGameModel(newGameModel);
+      setAttackCount((pre) => pre++);
+      if (attackCount < 3) {
+        const newGameModel = Object.assign(new GameModel(), gameModel);
+        newGameModel.checkCollision(newGameModel.hitPosition, newGameModel.watermelonPosition);
+        setGameModel(newGameModel);
+      }
     }
 
     if (gamepad) {
@@ -143,7 +154,8 @@ export function useGameLogic(pairingCode: string) {
       watermelonPosition: updatedGameModel.watermelonPosition,
       hitPosition: updatedGameModel.hitPosition,
       isCollision: updatedGameModel.isCollision,
-      pairingCode: pairingCode
+      pairingCode: pairingCode,
+      attackCount: attackCount
     };
     const data = await fetch("/api/game", {
       method: "POST",
