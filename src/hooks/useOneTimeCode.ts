@@ -1,5 +1,5 @@
-import { generateOneTimeCode } from "@/lib/OTC/generateOneTimeCode";
 import { useEffect, useState } from "react";
+import { generateOneTimeCode } from "@/lib/OTC/generateOneTimeCode";
 
 /**
  * 一定時間ごとにOTPを生成する関数
