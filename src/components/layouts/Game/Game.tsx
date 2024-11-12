@@ -1,8 +1,8 @@
 "use client";
+import { useEffect, useRef, useState } from "react";
 import { calculateHitPosition } from "@/lib/calculateHitPosition";
 import { checkCollision } from "@/lib/checkCollision";
 import { Position } from "@/types/position";
-import { useEffect, useRef, useState } from "react";
 
 export default function Game() {
   const [characterPosition, setCharacterPosition] = useState<Position>({
@@ -34,7 +34,7 @@ export default function Game() {
         const ballHeight = ballRef.current.clientHeight;
         const movePx = 20;
         const rotationStep = 45; // 回転ステップ
-        let newPosition: Position = { ...characterPosition };
+        const newPosition: Position = { ...characterPosition };
 
         // 回転角度をラジアンに変換
         const rad = (newPosition.rotation * Math.PI) / 180;
