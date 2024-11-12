@@ -1,5 +1,5 @@
-import { Position } from "@/types/position";
 import { checkCollision } from "../checkCollision";
+import { Position } from "@/types/position";
 
 describe("checkCollision", () => {
   let hitPosition: Position;

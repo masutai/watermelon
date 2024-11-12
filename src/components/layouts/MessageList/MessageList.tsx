@@ -1,8 +1,8 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { ReturnDataType } from "@/app/api/test/route";
 import { pusherClient } from "@/lib/pusher/client";
-import { useEffect, useState } from "react";
 
 type MessageListProps = {};
 
@@ -27,14 +27,14 @@ export const MessageList = (props: MessageListProps) => {
   const handleTestClick = async () => {
     if (!inputMessage || !username) return; // Prevent sending empty messages or without username
     const body = { message: inputMessage, user: username };
-    let data = await fetch("/api/test", {
+    const data = await fetch("/api/test", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
       body: JSON.stringify(body)
     });
-    let json = await data.json();
+    const json = await data.json();
     console.log("handle_test_click_response", json);
     setInputMessage(""); // Clear the input field after sending the message
   };

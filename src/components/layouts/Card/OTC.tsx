@@ -1,8 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { useOneTimeCode } from "@/hooks/useOneTimeCode";
-import Link from "next/link";
 
 // TODO: cookie
 export default function OTCButton() {

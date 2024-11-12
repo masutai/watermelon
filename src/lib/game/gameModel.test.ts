@@ -1,5 +1,5 @@
-import { Position } from "@/types/position";
 import { GameModel } from "./gameModel";
+import { Position } from "@/types/position";
 
 describe("GameModelクラスのテスト", () => {
   let gameModel: GameModel;

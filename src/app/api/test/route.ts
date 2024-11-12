@@ -9,7 +9,7 @@ export type ReturnDataType = {
   date: Date;
 };
 
-export async function POST(req: Request, res: Response) {
+export async function POST(req: Request) {
   const { user, message } = await req.json();
   try {
     await pusherServer.trigger("private-chat", "evt::test", {
