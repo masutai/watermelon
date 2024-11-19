@@ -8,6 +8,7 @@ export function useGameLogic(pairingCode: string) {
   const containerRef = useRef<HTMLDivElement>(null);
   const ballRef = useRef<HTMLDivElement>(null);
   const [attackCount, setAttackCount] = useState(0);
+  const [isGameOver, setIsGameOver] = useState(false);
 
   const handleKeyDown = useCallback(
     async (e: KeyboardEvent) => {
@@ -49,14 +50,16 @@ export function useGameLogic(pairingCode: string) {
             deltaY = movePx * Math.sin(rad);
             break;
           case " ":
-            setAttackCount((pre) => pre++);
-            if (attackCount < 3) {
+            setAttackCount(attackCount + 1);
+            if (attackCount < 100) {
               const newGameModel = Object.assign(new GameModel(), gameModel);
               newGameModel.checkCollision(
                 newGameModel.hitPosition,
                 newGameModel.watermelonPosition
               );
               setGameModel(newGameModel);
+            } else {
+              setIsGameOver(true);
             }
             break;
           default:
@@ -111,13 +114,9 @@ export function useGameLogic(pairingCode: string) {
   );
 
   const handlePadDown = useCallback(async () => {
-    console.log("handlePadDown is called ...");
     const gamepad = navigator.getGamepads()[1];
     const waitPx = 20;
-    const rotationStep = 45;
     const newPosition: Position = { ...gameModel.characterPosition };
-
-    const rad = (newPosition.rotation * Math.PI) / 180;
 
     let deltaX = 0;
     let deltaY = 0;
@@ -182,7 +181,7 @@ export function useGameLogic(pairingCode: string) {
     gameModel,
     setGameModel,
     containerRef,
-    ballRef,
+    isGameOver,
     handleKeyDown,
     handlePadDown
   };
