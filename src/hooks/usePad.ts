@@ -9,17 +9,16 @@ export function usePad(initialGameModel: GameModel) {
     const handleGamepadInput = () => {
       const gamepads = navigator.getGamepads();
       const gamepad = Array.from(gamepads).find((gp) => gp !== null);
-      console.log(gamepad);
 
       if (gamepad) {
-        const deltaX = gamepad.axes[0] * 20;
-        const deltaY = gamepad.axes[1] * 20;
-
+        const deltaX = gamepad.axes[0] * 23;
+        const deltaY = gamepad.axes[1] * 23;
+        const deltaRotation = gamepad.axes[2] * 90;
         setGameModel((prevModel) => {
           const newPosition = {
             x: prevModel.characterPosition.x + deltaX,
             y: prevModel.characterPosition.y + deltaY,
-            rotation: prevModel.characterPosition.rotation
+            rotation: prevModel.characterPosition.rotation + deltaRotation
           };
 
           const updateGameModel = new GameModel();
@@ -30,7 +29,7 @@ export function usePad(initialGameModel: GameModel) {
       }
     };
 
-    const interval = setInterval(handleGamepadInput, 16);
+    const interval = setInterval(handleGamepadInput, 200);
     return () => clearInterval(interval);
   }, []); // 依存配列を空にする
 
