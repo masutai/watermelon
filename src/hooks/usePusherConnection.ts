@@ -7,10 +7,9 @@ export function usePusherConnection(
   initialGameModel: GameModel,
   setGameModel: React.Dispatch<React.SetStateAction<GameModel>>,
   handleKeyDown: (e: KeyboardEvent) => void,
-  handlePadDown: (e: GamepadEvent) => void,
   pairingCode: string
 ) {
-  const { x, y } = useGamepad();
+  const { x, y, rot } = useGamepad();
   useEffect(() => {
     const channel = pusherClient.subscribe(`private-game-${pairingCode}`);
 
@@ -21,12 +20,15 @@ export function usePusherConnection(
     window.addEventListener("keydown", handleKeyDown);
 
     const handleGamepadInput = async () => {
+      const deltaRot = rot * 90;
+      // const rotation = initialGameModel.characterPosition.rotation + deltaRot;
+      // const rad = (rotation * Math.PI) / 180;
       const deltaX = x * 20;
       const deltaY = y * 20;
       const newPosition = {
         x: initialGameModel.characterPosition.x + deltaX,
         y: initialGameModel.characterPosition.y + deltaY,
-        rotation: initialGameModel.characterPosition.rotation
+        rotation: initialGameModel.characterPosition.rotation + deltaRot
       };
 
       const updatedGameModel = new GameModel();
@@ -57,7 +59,7 @@ export function usePusherConnection(
     };
 
     // ゲームパッドの入力を定期的にチェック
-    const gamepadInterval = setInterval(handleGamepadInput, 1000);
+    const gamepadInterval = setInterval(handleGamepadInput, 200);
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
@@ -65,5 +67,5 @@ export function usePusherConnection(
       channel.unbind();
       pusherClient.unsubscribe(`private-game-${pairingCode}`);
     };
-  }, [setGameModel, handleKeyDown, x, y, initialGameModel, pairingCode]);
+  }, [setGameModel, handleKeyDown, x, y, rot, initialGameModel, pairingCode]);
 }
