@@ -3,22 +3,19 @@ import { useEffect, useState } from "react";
 export default function useGamepad() {
   const [x, setX] = useState(0);
   const [y, setY] = useState(0);
+  const [rot, setRot] = useState(0);
   useEffect(() => {
     const interval = setInterval(() => {
-      let gamepad: Gamepad | null = null;
-      // if (navigator.getGamepads()[0]) {
-      //   gamepad = navigator.getGamepads()[0];
-      // } else if (navigator.getGamepads()[1]) {
-
-      // }
-      gamepad = navigator.getGamepads()[1];
+      const gamepads = navigator.getGamepads();
+      const gamepad = Array.from(gamepads).find((gp) => gp !== null);
       if (gamepad) {
-        setX(gamepad.axes[0]);
-        setY(gamepad.axes[1]);
+        Math.abs(gamepad.axes[0]) >= 0.3 ? setX(gamepad.axes[0]) : setX(0);
+        Math.abs(gamepad.axes[1]) >= 0.3 ? setY(gamepad.axes[1]) : setY(0);
+        Math.abs(gamepad.axes[2]) >= 0.5 ? setRot(gamepad.axes[2]) : setRot(0);
       }
-    }, 100);
+    }, 200);
 
     return () => clearInterval(interval);
   }, []);
-  return { x, y };
+  return { x, y, rot };
 }

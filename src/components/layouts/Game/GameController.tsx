@@ -5,17 +5,10 @@ import GameView from "./GameView";
 import { usePusherConnection } from "@/hooks/usePusherConnection";
 
 export default function GameController({ pairingCode }: { pairingCode: string }) {
-  const {
-    pressedKey,
-    gameModel,
-    setGameModel,
-    containerRef,
-    isGameOver,
-    handleKeyDown,
-    handlePadDown
-  } = useGameLogic(pairingCode);
+  const { pressedKey, gameModel, setGameModel, containerRef, ballRef, handleKeyDown } =
+    useGameLogic(pairingCode);
 
-  usePusherConnection(gameModel, setGameModel, handleKeyDown, handlePadDown, pairingCode);
+  usePusherConnection(gameModel, setGameModel, handleKeyDown, pairingCode);
 
   return (
     <div className="h-screen flex flex-col">
