@@ -7,6 +7,8 @@ export function useGameLogic(pairingCode: string) {
   const [gameModel, setGameModel] = useState<GameModel>(new GameModel());
   const containerRef = useRef<HTMLDivElement>(null);
   const ballRef = useRef<HTMLDivElement>(null);
+  const [attackCount, setAttackCount] = useState(0);
+  const [isGameOver, setIsGameOver] = useState(false);
 
   const handleKeyDown = useCallback(
     async (e: KeyboardEvent) => {
@@ -48,9 +50,17 @@ export function useGameLogic(pairingCode: string) {
             deltaY = movePx * Math.sin(rad);
             break;
           case " ":
-            const newGameModel = Object.assign(new GameModel(), gameModel);
-            newGameModel.checkCollision(newGameModel.hitPosition, newGameModel.watermelonPosition);
-            setGameModel(newGameModel);
+            setAttackCount(attackCount + 1);
+            if (attackCount < 100) {
+              const newGameModel = Object.assign(new GameModel(), gameModel);
+              newGameModel.checkCollision(
+                newGameModel.hitPosition,
+                newGameModel.watermelonPosition
+              );
+              setGameModel(newGameModel);
+            } else {
+              setIsGameOver(true);
+            }
             break;
           default:
             break;
@@ -76,7 +86,8 @@ export function useGameLogic(pairingCode: string) {
           watermelonPosition: updatedGameModel.watermelonPosition,
           hitPosition: updatedGameModel.hitPosition,
           isCollision: updatedGameModel.isCollision,
-          pairingCode: pairingCode
+          pairingCode: pairingCode,
+          attackCount: attackCount
         };
         const data = await fetch("/api/game", {
           method: "POST",
@@ -101,6 +112,8 @@ export function useGameLogic(pairingCode: string) {
     },
     [gameModel, containerRef, ballRef, pairingCode]
   );
+    const data = await fetch("/api/game", {
+      
   return {
     pressedKey,
     gameModel,

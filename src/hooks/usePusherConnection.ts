@@ -41,7 +41,8 @@ export function usePusherConnection(
         watermelonPosition: updatedGameModel.watermelonPosition,
         hitPosition: updatedGameModel.hitPosition,
         isCollision: updatedGameModel.isCollision,
-        pairingCode: pairingCode
+        pairingCode: pairingCode,
+        attackCount: 0
       };
       const data = await fetch("/api/game", {
         method: "POST",

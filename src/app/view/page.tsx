@@ -1,5 +1,9 @@
-import GameSpectate from "@/components/layouts/Game/GameSpectate";
+import PairingCodeForm from "@/components/layouts/Form/PairingCodeForm";
 
 export default function View() {
-  return <GameSpectate pairingCode="test" />;
+  return (
+    <div>
+      <PairingCodeForm />
+    </div>
+  );
 }
