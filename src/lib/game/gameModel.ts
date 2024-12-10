@@ -25,8 +25,8 @@ export class GameModel {
 
   checkCollision(hitPosition: Position, watermelon: Position) {
     const distance = Math.sqrt(
-      (hitPosition.x - watermelon.x) ** 2 + (hitPosition.y - watermelon.y) ** 2
+      (hitPosition.x - watermelon.x - 20) ** 2 + (hitPosition.y - watermelon.y - 20) ** 2
     );
-    this.isCollision = distance < 20;
+    this.isCollision = distance < 25;
   }
 }

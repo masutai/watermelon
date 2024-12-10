@@ -7,6 +7,8 @@ export function useGameLogic(pairingCode: string) {
   const [gameModel, setGameModel] = useState<GameModel>(new GameModel());
   const containerRef = useRef<HTMLDivElement>(null);
   const ballRef = useRef<HTMLDivElement>(null);
+  const [attackCount, setAttackCount] = useState(0);
+  const [isGameOver, setIsGameOver] = useState(false);
 
   const handleKeyDown = useCallback(
     async (e: KeyboardEvent) => {
@@ -48,9 +50,17 @@ export function useGameLogic(pairingCode: string) {
             deltaY = movePx * Math.sin(rad);
             break;
           case " ":
-            const newGameModel = Object.assign(new GameModel(), gameModel);
-            newGameModel.checkCollision(newGameModel.hitPosition, newGameModel.watermelonPosition);
-            setGameModel(newGameModel);
+            setAttackCount(attackCount + 1);
+            if (attackCount < 100) {
+              const newGameModel = Object.assign(new GameModel(), gameModel);
+              newGameModel.checkCollision(
+                newGameModel.hitPosition,
+                newGameModel.watermelonPosition
+              );
+              setGameModel(newGameModel);
+            } else {
+              setIsGameOver(true);
+            }
             break;
           default:
             break;
@@ -76,7 +86,8 @@ export function useGameLogic(pairingCode: string) {
           watermelonPosition: updatedGameModel.watermelonPosition,
           hitPosition: updatedGameModel.hitPosition,
           isCollision: updatedGameModel.isCollision,
-          pairingCode: pairingCode
+          pairingCode: pairingCode,
+          attackCount: attackCount
         };
         const data = await fetch("/api/game", {
           method: "POST",
@@ -102,69 +113,6 @@ export function useGameLogic(pairingCode: string) {
     [gameModel, containerRef, ballRef, pairingCode]
   );
 
-  const handlePadDown = useCallback(async () => {
-    console.log("handlePadDown is called ...");
-    const gamepad = navigator.getGamepads()[1];
-    const waitPx = 20;
-    const rotationStep = 45;
-    const newPosition: Position = { ...gameModel.characterPosition };
-
-    const rad = (newPosition.rotation * Math.PI) / 180;
-
-    let deltaX = 0;
-    let deltaY = 0;
-    const deltaRotation = 0;
-
-    if (gamepad?.buttons[0]?.pressed) {
-      const newGameModel = Object.assign(new GameModel(), gameModel);
-      newGameModel.checkCollision(newGameModel.hitPosition, newGameModel.watermelonPosition);
-      setGameModel(newGameModel);
-    }
-
-    if (gamepad) {
-      deltaX = gamepad?.axes[0] * waitPx;
-      deltaY = gamepad?.axes[1] * waitPx;
-    }
-
-    if (deltaRotation !== 0) {
-      newPosition.rotation = (newPosition.rotation + deltaRotation) % 360;
-    }
-    if (deltaX !== 0 || deltaY !== 0) {
-      newPosition.x += deltaX;
-      newPosition.y += deltaY;
-    }
-
-    const updatedGameModel = Object.assign(new GameModel());
-    Object.assign(updatedGameModel, gameModel);
-    updatedGameModel.updateCharacterPosition(newPosition);
-
-    const body = {
-      characterPosition: updatedGameModel.characterPosition,
-      watermelonPosition: updatedGameModel.watermelonPosition,
-      hitPosition: updatedGameModel.hitPosition,
-      isCollision: updatedGameModel.isCollision,
-      pairingCode: pairingCode
-    };
-    const data = await fetch("/api/game", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(body)
-    });
-    const json = await data.json();
-    if (json && typeof json === "object" && "gameModel" in json) {
-      setGameModel(json.gameModel);
-    } else {
-      console.error("Invalid response from API:", json);
-    }
-
-    if (ballRef.current) {
-      ballRef.current.style.transform = `rotate(${newPosition.rotation}deg)`;
-      ballRef.current.style.left = `${newPosition.x}px`;
-      ballRef.current.style.top = `${newPosition.y}px`;
-    }
-  }, [gameModel, pairingCode, setGameModel]);
   return {
     pressedKey,
     gameModel,
@@ -172,6 +120,6 @@ export function useGameLogic(pairingCode: string) {
     containerRef,
     ballRef,
     handleKeyDown,
-    handlePadDown
+    isGameOver
   };
 }

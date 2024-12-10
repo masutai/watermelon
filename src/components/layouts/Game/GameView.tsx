@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import { Position } from "@/types/position";
 
 interface GameViewProps {
@@ -11,9 +12,31 @@ export default function GameView({
   watermelonPosition,
   hitPosition
 }: GameViewProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    // キャラクターの位置が変わるたびに実行
+    if (containerRef.current) {
+      const container = containerRef.current;
+      const characterElement = container.querySelector(".character");
+
+      if (characterElement) {
+        // キャラクターが表示領域の中心に来るようにスクロール
+        characterElement.scrollIntoView({
+          behavior: "smooth",
+          block: "center",
+          inline: "center"
+        });
+      }
+    }
+  }, [characterPosition.x, characterPosition.y]);
+
   return (
     <>
-      <div className="relative overflow-hidden border border-teal-300 h-full">
+      <div
+        ref={containerRef}
+        className="relative overflow-auto border border-teal-300 h-full min-w-[1024px]"
+      >
         <div className="max-h-screen h-screen bg-amber-500 text-black">
           <div
             className="absolute w-10 h-10 bg-green-800 rounded-full"
@@ -25,7 +48,7 @@ export default function GameView({
           />
         </div>
         <div
-          className="absolute w-10 h-10 bg-blue-500 rounded-sm transition-all duration-75"
+          className="absolute w-10 h-10 bg-blue-500 rounded-sm transition-all duration-75 character"
           style={{
             left: `${characterPosition.x}px`,
             top: `${characterPosition.y}px`,
