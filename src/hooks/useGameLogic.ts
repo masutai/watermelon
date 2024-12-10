@@ -112,14 +112,14 @@ export function useGameLogic(pairingCode: string) {
     },
     [gameModel, containerRef, ballRef, pairingCode]
   );
-    const data = await fetch("/api/game", {
-      
+
   return {
     pressedKey,
     gameModel,
     setGameModel,
     containerRef,
     ballRef,
-    handleKeyDown
+    handleKeyDown,
+    isGameOver
   };
 }

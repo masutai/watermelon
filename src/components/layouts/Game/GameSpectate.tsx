@@ -10,11 +10,15 @@ export default function GameSpectate({ pairingCode }: { pairingCode: string }) {
   usePusherConnection(gameModel, setGameModel, () => {}, pairingCode);
   return (
     <div>
-      <GameView
-        characterPosition={gameModel.characterPosition}
-        watermelonPosition={gameModel.watermelonPosition}
-        hitPosition={gameModel.hitPosition}
-      />
+      {gameModel.isCollision ? (
+        <p>クリア！</p>
+      ) : (
+        <GameView
+          characterPosition={gameModel.characterPosition}
+          watermelonPosition={gameModel.watermelonPosition}
+          hitPosition={gameModel.hitPosition}
+        />
+      )}
     </div>
   );
 }

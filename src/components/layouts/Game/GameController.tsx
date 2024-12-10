@@ -5,7 +5,7 @@ import GameView from "./GameView";
 import { usePusherConnection } from "@/hooks/usePusherConnection";
 
 export default function GameController({ pairingCode }: { pairingCode: string }) {
-  const { pressedKey, gameModel, setGameModel, containerRef, ballRef, handleKeyDown } =
+  const { pressedKey, gameModel, setGameModel, containerRef, handleKeyDown, isGameOver } =
     useGameLogic(pairingCode);
 
   usePusherConnection(gameModel, setGameModel, handleKeyDown, pairingCode);
@@ -15,15 +15,19 @@ export default function GameController({ pairingCode }: { pairingCode: string })
       <h1 className="text-4xl font-bold mb-4">Game</h1>
       <p className="mb-4">最後に押されたキー: {pressedKey || "なし"}</p>
       {isGameOver ? <p>collision</p> : <></>}
-      <div ref={containerRef} className="relative overflow-hidden border border-teal-300 h-full">
-        <div className="hidden">
-          <GameView
-            characterPosition={gameModel.characterPosition}
-            watermelonPosition={gameModel.watermelonPosition}
-            hitPosition={gameModel.hitPosition}
-          />
+      {gameModel.isCollision ? (
+        <p>クリア！</p>
+      ) : (
+        <div ref={containerRef} className="relative overflow-hidden border border-teal-300 h-full">
+          <div className="hidden">
+            <GameView
+              characterPosition={gameModel.characterPosition}
+              watermelonPosition={gameModel.watermelonPosition}
+              hitPosition={gameModel.hitPosition}
+            />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }
