@@ -1,5 +1,6 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useGameLogic } from "../../../hooks/useGameLogic";
 import GameView from "./GameView";
 import { usePusherConnection } from "@/hooks/usePusherConnection";
@@ -9,10 +10,12 @@ export default function GameController({ pairingCode }: { pairingCode: string })
     useGameLogic(pairingCode);
 
   usePusherConnection(gameModel, setGameModel, handleKeyDown, pairingCode);
-
+  const router = useRouter();
+  if (gameModel.isCollision) {
+    router.push("/clear");
+  }
   return (
     <div className="h-screen flex flex-col">
-      <h1 className="text-4xl font-bold mb-4">Game</h1>
       <p className="mb-4">最後に押されたキー: {pressedKey || "なし"}</p>
       {isGameOver ? <p>collision</p> : <></>}
       {gameModel.isCollision ? (

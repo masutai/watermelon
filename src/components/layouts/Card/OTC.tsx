@@ -14,9 +14,9 @@ export default function OTCButton() {
 
   return (
     <div>
-      <p>OTC: {code}</p>
+      <p>ペアリングコード: {code}</p>
       <Button>
-        <Link href={`/play/${code}`}>ペアリング</Link>
+        <Link href={`/play/${code}`}>Player</Link>
       </Button>
     </div>
   );

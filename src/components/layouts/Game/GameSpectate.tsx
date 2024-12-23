@@ -4,10 +4,16 @@ import { useState } from "react";
 import GameView from "./GameView";
 import { usePusherConnection } from "@/hooks/usePusherConnection";
 import { GameModel } from "@/lib/game/gameModel";
+import { useRouter } from "next/navigation";
 
 export default function GameSpectate({ pairingCode }: { pairingCode: string }) {
   const [gameModel, setGameModel] = useState<GameModel>(new GameModel());
   usePusherConnection(gameModel, setGameModel, () => {}, pairingCode);
+  const router = useRouter();
+  console.log(router);
+  if (gameModel.isCollision) {
+    router.push("/clear");
+  }
   return (
     <div>
       {gameModel.isCollision ? (
