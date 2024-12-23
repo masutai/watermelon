@@ -8,7 +8,6 @@ export function useGameLogic(pairingCode: string) {
   const containerRef = useRef<HTMLDivElement>(null);
   const ballRef = useRef<HTMLDivElement>(null);
   const [attackCount, setAttackCount] = useState(0);
-  const [isGameOver, setIsGameOver] = useState(false);
 
   const handleKeyDown = useCallback(
     async (e: KeyboardEvent) => {
@@ -58,8 +57,6 @@ export function useGameLogic(pairingCode: string) {
                 newGameModel.watermelonPosition
               );
               setGameModel(newGameModel);
-            } else {
-              setIsGameOver(true);
             }
             break;
           default:
@@ -119,7 +116,6 @@ export function useGameLogic(pairingCode: string) {
     setGameModel,
     containerRef,
     ballRef,
-    handleKeyDown,
-    isGameOver
+    handleKeyDown
   };
 }
