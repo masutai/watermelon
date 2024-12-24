@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 
 export function useTimer() {
-  const gameTimer = 300;
+  const gameTimer = 120;
   const [timer, setTimer] = useState(gameTimer);
 
   useEffect(() => {
