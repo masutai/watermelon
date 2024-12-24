@@ -13,7 +13,11 @@ export class GameModel {
       y: Math.floor(Math.random() * 500),
       rotation: Math.floor(Math.random() * 360)
     };
-    this.watermelonPosition = { x: 700, y: 20, rotation: 0 };
+    this.watermelonPosition = {
+      x: Math.floor(Math.random() * 1500),
+      y: Math.floor(Math.random() * 30),
+      rotation: 0
+    };
     this.hitPosition = calculateHitPosition(this.characterPosition);
     this.isCollision = false;
   }
