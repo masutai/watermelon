@@ -11,7 +11,7 @@ type CardProps = React.ComponentProps<typeof Card> & {
 
 export default function CardTemplate({ className, ...props }: CardProps) {
   return (
-    <Card className={cn("border border-white", className)} {...props}>
+    <Card className={cn("border border-gray-600 dark:border-white mb-3", className)} {...props}>
       <CardHeader>
         <CardTitle>{props.title}</CardTitle>
       </CardHeader>

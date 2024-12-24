@@ -34,8 +34,8 @@
     "next-themes": "^0.3.0",
     "pusher": "^5.2.0",
     "pusher-js": "^8.4.0-rc2",
-    "react": "19.0.0-rc-02c0e824-20241028",
-    "react-dom": "19.0.0-rc-02c0e824-20241028",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
     "react-hook-form": "^7.53.0",
     "react-ts-gamepads": "^1.0.6",
     "tailwind-merge": "^2.5.2",
@@ -87,9 +87,5 @@
     "commitizen": {
       "path": "node_modules/cz-customizable"
     }
-  },
-  "overrides": {
-    "@types/react": "npm:types-react@19.0.0-rc.1",
-    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
   }
 }

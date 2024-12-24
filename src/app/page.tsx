@@ -5,15 +5,18 @@ import OTCButton from "@/components/layouts/Card/OTC";
 
 export default function Home() {
   return (
-    <main className="">
+    <main className="mx-auto max-w-4xl p-4">
       <CardTemplate
-        title="ペアリング"
-        content="ペアリングコードを生成し、プレイページへ遷移する"
+        title="プレイヤー"
+        content="プレイボタンを押すことで、プレイヤーとしてゲームを開始できます。"
         ButtonComponent={OTCButton}
       />
-      <CardTemplate title="プレイする" content="" link="/play" buttonText="Click here" />
-      <CardTemplate title="プレイする" content="" link="/play" buttonText="Click here" />
-      <CardTemplate title="応援する" content="" link="/view" buttonText="Click here" />
+      <CardTemplate
+        title="サポーター"
+        content="サポーターとして始める場合、サポートボタンを押します。プレイヤーから伝えられたコードを遷移後の画面で入力してください。"
+        link="/view"
+        buttonText="サポート"
+      />
     </main>
   );
 }

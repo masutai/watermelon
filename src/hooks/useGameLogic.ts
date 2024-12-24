@@ -8,7 +8,6 @@ export function useGameLogic(pairingCode: string) {
   const containerRef = useRef<HTMLDivElement>(null);
   const ballRef = useRef<HTMLDivElement>(null);
   const [attackCount, setAttackCount] = useState(0);
-  const [isGameOver, setIsGameOver] = useState(false);
 
   const handleKeyDown = useCallback(
     async (e: KeyboardEvent) => {
@@ -58,8 +57,6 @@ export function useGameLogic(pairingCode: string) {
                 newGameModel.watermelonPosition
               );
               setGameModel(newGameModel);
-            } else {
-              setIsGameOver(true);
             }
             break;
           default:
@@ -113,76 +110,12 @@ export function useGameLogic(pairingCode: string) {
     [gameModel, containerRef, ballRef, pairingCode]
   );
 
-  const handlePadDown = useCallback(async () => {
-    const gamepad = navigator.getGamepads()[1];
-    const waitPx = 20;
-    const newPosition: Position = { ...gameModel.characterPosition };
-
-    let deltaX = 0;
-    let deltaY = 0;
-    const deltaRotation = 0;
-
-    if (gamepad?.buttons[0]?.pressed) {
-      setAttackCount((pre) => pre++);
-      if (attackCount < 3) {
-        const newGameModel = Object.assign(new GameModel(), gameModel);
-        newGameModel.checkCollision(newGameModel.hitPosition, newGameModel.watermelonPosition);
-        setGameModel(newGameModel);
-      }
-    }
-
-    if (gamepad) {
-      deltaX = gamepad?.axes[0] * waitPx;
-      deltaY = gamepad?.axes[1] * waitPx;
-    }
-
-    if (deltaRotation !== 0) {
-      newPosition.rotation = (newPosition.rotation + deltaRotation) % 360;
-    }
-    if (deltaX !== 0 || deltaY !== 0) {
-      newPosition.x += deltaX;
-      newPosition.y += deltaY;
-    }
-
-    const updatedGameModel = Object.assign(new GameModel());
-    Object.assign(updatedGameModel, gameModel);
-    updatedGameModel.updateCharacterPosition(newPosition);
-
-    const body = {
-      characterPosition: updatedGameModel.characterPosition,
-      watermelonPosition: updatedGameModel.watermelonPosition,
-      hitPosition: updatedGameModel.hitPosition,
-      isCollision: updatedGameModel.isCollision,
-      pairingCode: pairingCode,
-      attackCount: attackCount
-    };
-    const data = await fetch("/api/game", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(body)
-    });
-    const json = await data.json();
-    if (json && typeof json === "object" && "gameModel" in json) {
-      setGameModel(json.gameModel);
-    } else {
-      console.error("Invalid response from API:", json);
-    }
-
-    if (ballRef.current) {
-      ballRef.current.style.transform = `rotate(${newPosition.rotation}deg)`;
-      ballRef.current.style.left = `${newPosition.x}px`;
-      ballRef.current.style.top = `${newPosition.y}px`;
-    }
-  }, [gameModel, pairingCode, setGameModel]);
   return {
     pressedKey,
     gameModel,
     setGameModel,
     containerRef,
-    isGameOver,
-    handleKeyDown,
-    handlePadDown
+    ballRef,
+    handleKeyDown
   };
 }
